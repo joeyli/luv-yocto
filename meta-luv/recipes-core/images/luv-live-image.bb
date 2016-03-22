@@ -57,15 +57,15 @@ build_img() {
 
     dd if=/dev/zero of=$IMG bs=1 seek=$IMG_SIZE count=0
 
-    parted $IMG mklabel msdos
+    sudo parted $IMG mklabel msdos
 
-    parted $IMG mkpart primary fat32 0% "${VFAT_RESULTS_SIZE}B"
+    sudo parted $IMG mkpart primary fat32 0% "${VFAT_RESULTS_SIZE}B"
 
     # start second partition on the first sector after the first partition
-    parted $IMG mkpart primary fat32 "$(expr $VFAT_RESULTS_SIZE + 512)B" \
+    sudo parted $IMG mkpart primary fat32 "$(expr $VFAT_RESULTS_SIZE + 512)B" \
            "$(expr $VFAT_SIZE + $VFAT_RESULTS_SIZE)B"
 
-    parted $IMG set 2 boot on
+    sudo parted $IMG set 2 boot on
 
     dd conv=notrunc if=${VFAT_RESULTS} of=$IMG seek=1 bs=512
     dd if=${VFAT} of=$IMG seek=$(expr $(expr $VFAT_RESULTS_SIZE / 512) + 1) bs=512
