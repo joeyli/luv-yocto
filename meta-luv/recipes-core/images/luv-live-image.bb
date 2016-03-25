@@ -32,8 +32,8 @@ build_img() {
     # Sectors: 512 bytes
     # Blocks: 1024 bytes
     VFAT_RESULTS=${DEPLOY_DIR_IMAGE}/${PN}-results.hddimg
-    # 16MB of space for test results
-    VFAT_RESULTS_SPACE=16777216
+    # 160MB of space for test results
+    VFAT_RESULTS_SPACE=167772160
     VFAT_RESULTS_BLOCKS=$(expr $VFAT_RESULTS_SPACE / 1024)
     # TODO: do we need to dynamically generate the UUID?
     # For now, every time this UUID changes, the file etc/init.d/luv-test-manager
