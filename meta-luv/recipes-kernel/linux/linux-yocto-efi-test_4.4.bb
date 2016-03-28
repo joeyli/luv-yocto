@@ -57,7 +57,8 @@ require recipes-kernel/linux/linux-yocto.inc
 
 # Override SRC_URI in a bbappend file to point at a different source
 # tree if you do not want to build from Linus' tree.
-SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git;protocol=git;branch=${KBRANCH};name=machine"
+LINUX_TREE = 'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git;protocol=git;branch=${KBRANCH};name=machine'
+SRC_URI = "${LINUX_TREE}"
 
 # Add the defconfig from v4.4 kernel and the configuration fragments
 SRC_URI += "file://defconfig"
@@ -83,7 +84,7 @@ KCONFIG_MODE = '--alldefconfig'
 
 # While building for AArch64 architecture fetch latest Linus' tree
 # and apply default config, which includes ACPI options enabled.
-SRC_URI_aarch64 = "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git;protocol=git;branch=${KBRANCH};name=machine"
+SRC_URI_aarch64 = "${LINUX_TREE}"
 SRC_URI_aarch64 += "file://${MACHINE}/defconfig \
                     file://${MACHINE}/acpi.cfg \
                     file://${MACHINE}/network.cfg \
@@ -95,10 +96,7 @@ LINUX_VERSION_EXTENSION ?= "-efitest"
 # Override SRCREV to point to a different commit in a bbappend file to
 # build a different release of the Linux kernel.
 # tag: v3.4 76e10d158efb6d4516018846f60c2ab5501900bc
-SRCREV_machine_qemux86-64 = "afd2ff9b7e1b367172f18ba7f693dfb62bdcb2dc"
-SRCREV_machine_qemux86 = "afd2ff9b7e1b367172f18ba7f693dfb62bdcb2dc"
-
-SRCREV_machine_qemuarm64 = "${AUTOREV}"
+SRCREV = "afd2ff9b7e1b367172f18ba7f693dfb62bdcb2dc"
 
 PR = "r5"
 PV = "${LINUX_VERSION}+git${SRCPV}"
