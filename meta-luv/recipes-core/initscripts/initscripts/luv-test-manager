@@ -185,6 +185,8 @@ $luv_version
 Date and time of the system : $tstamp
 
 System: $(cat /proc/cpuinfo | grep 'model name' | cut -d: -f2 | uniq) x $(nproc)
+            $(dmidecode -s system-manufacturer | grep -v \#) $(dmidecode -s system-product-name | grep -v \#)
+            $(dmidecode -s bios-vendor | grep -v \#) $(dmidecode -s bios-version | grep -v \#)
 
 Test results summary:
 
