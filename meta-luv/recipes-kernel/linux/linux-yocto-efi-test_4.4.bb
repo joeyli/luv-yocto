@@ -51,13 +51,13 @@
 #            SRC_URI += "file://feature.scc"
 #
 
-KBRANCH="master"
+KBRANCH="next"
 inherit kernel
 require recipes-kernel/linux/linux-yocto.inc
 
 # Override SRC_URI in a bbappend file to point at a different source
 # tree if you do not want to build from Linus' tree.
-LINUX_TREE = 'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git;protocol=git;branch=${KBRANCH};name=machine'
+LINUX_TREE = 'git://git.kernel.org/pub/scm/linux/kernel/git/mfleming/efi.git;protocol=git;branch=${KBRANCH};name=machine'
 SRC_URI = "${LINUX_TREE}"
 
 # Add the defconfig from v4.4 kernel and the configuration fragments
@@ -96,7 +96,7 @@ LINUX_VERSION_EXTENSION ?= "-efitest"
 # Override SRCREV to point to a different commit in a bbappend file to
 # build a different release of the Linux kernel.
 # tag: v3.4 76e10d158efb6d4516018846f60c2ab5501900bc
-SRCREV = "afd2ff9b7e1b367172f18ba7f693dfb62bdcb2dc"
+SRCREV = "${AUTOREV}"
 
 PR = "r5"
 PV = "${LINUX_VERSION}+git${SRCPV}"
@@ -117,8 +117,8 @@ do_install_append() {
                    -C ${B} M=${S}/tools/testing/nvdimm modules_install
          # There are 2 copies of the NVDIMM modules which are built. This is a
          # temporary fix to make sure the correct set of modules are used.
-         rm -rf ${D}/lib/modules/4.4.0-yocto-standard/kernel/drivers/nvdimm/
-         cp ${D}/lib/modules/4.4.0-yocto-standard/extra/nfit.ko \
-            ${D}/lib/modules/4.4.0-yocto-standard/kernel/drivers/acpi/
+         rm -rf ${D}/lib/modules/4.5.0-rc5-yocto-standard/kernel/drivers/nvdimm/
+         cp ${D}/lib/modules/4.5.0-rc5-yocto-standard/extra/nfit.ko \
+            ${D}/lib/modules/4.5.0-rc5-yocto-standard/kernel/drivers/acpi/
     fi
 }
